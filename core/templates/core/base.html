@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-white dark:bg-gray-900">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}CV Generator{% endblock %}</title>
+    {% load static %}
+    <link rel="icon" type="image/x-icon" href="{% static 'favicon.png' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        @media (prefers-color-scheme: dark) {
+            body.dark-mode {
+                background-color: #1a202c;
+                color: #f7fafc;
+            }
+
+            .dark-mode .bg-white {
+                background-color: #1a202c;
+                color: #f7fafc;
+            }
+
+            .dark-mode .bg-red-100 {
+                background-color: #4a5568;
+                color: #f7fafc;
+            }
+
+            .dark-mode .bg-blue-500 {
+                background-color: #4299e1;
+            }
+
+            .dark-mode .hover\:bg-blue-600:hover {
+                background-color: #3182ce;
+            }
+
+            .dark-mode .focus\:ring-blue-500:focus {
+                box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+            }
+
+            .dark-mode .text-blue-500 {
+                color: #4299e1;
+            }
+
+            .dark-mode .text-red-700 {
+                color: #f7fafc;
+            }
+
+            .dark-mode .shadow-md {
+                box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+            }
+
+            .dark-mode .border-blue-500 {
+                border-color: #4299e1;
+            }
+
+            .icon-dark {
+                color: #2d3748;
+            }
+
+            .icon-light {
+                color: #ecc94b;
+            }
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .content {
+            flex: 1;
+        }
+
+        .footer {
+            position: auto;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .active {
+            border-bottom: 2px solid #ffcc00; /* Example active style, you can customize */
+        }
+    </style>
+</head>
+<body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
+    <nav class="bg-blue-500 dark:bg-gray-700 p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="/" class="text-white font-bold">CV Generator</a>
+            <div class="flex items-center">
+                {% if not request.user.is_authenticated %}
+                <a href="/" class="text-white ml-4 font-bold {% if request.path == '/' %}active{% endif %}">Home</a>
+                <a href="/cv-generator/" class="text-white ml-4 font-bold {% if request.path == '/cv-generator/' %}active{% endif %}">Create Your CV</a>
+                    <a href="/cvs-created/" class="text-white ml-4 font-bold {% if request.path == '/cvs-created/' %}active{% endif %}">CVs Created</a>
+                    <button id="darkModeToggle" class="text-white ml-4">
+                        <i id="darkModeIcon" class="fas fa-moon icon-dark"></i>
+                    </button>
+                    
+                    <a href="/login_user/" class="text-white ml-4 font-bold">Login</a>
+                {% else %}
+
+                    <p class='text-white ml-4 font-bold'>Welcome, {{ request.user.username }} !</p>
+                    <a href="/" class="text-white ml-4 font-bold {% if request.path == '/' %}active{% endif %}">Home</a>
+                    <a href="/cv-generator/" class="text-white ml-4 font-bold {% if request.path == '/cv-generator/' %}active{% endif %}">Create Your CV</a>
+                    <a href="/cvs-created/" class="text-white ml-4 font-bold {% if request.path == '/cvs-created/' %}active{% endif %}">CVs Created</a>
+                    <button id="darkModeToggle" class="text-white ml-4">
+                        <i id="darkModeIcon" class="fas fa-moon icon-dark"></i>
+                    </button>
+                    <a href="/profile/" class="text-white ml-4 font-bold {% if request.path == '/profile/' %}active{% endif %}">Profile</a>
+                    <a href="/logout_user/" class="text-white ml-4 font-bold ">Logout</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    <div class="container mx-auto mt-8 content">
+        {% block content %}
+        {% endblock %}
+    </div>
+    <footer class="bg-gray-800 text-white p-4 text-center footer">
+        &copy; 2024 CV Generator  
+      <br>
+      Developed By <a href="/portfolio/" class="text-blue-400">Mohammad Omar Faruk</a>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            const darkModeIcon = document.getElementById('darkModeIcon');
+            const body = document.body;
+
+            if (localStorage.getItem('theme') === 'dark') {
+                body.classList.add('dark-mode');
+                darkModeIcon.classList.replace('fa-moon', 'fa-sun');
+                darkModeIcon.classList.replace('icon-dark', 'icon-light');
+            }
+
+            darkModeToggle.addEventListener('click', () => {
+                body.classList.toggle('dark-mode');
+                const isDarkMode = body.classList.contains('dark-mode');
+                darkModeIcon.classList.toggle('fa-moon', !isDarkMode);
+                darkModeIcon.classList.toggle('fa-sun', isDarkMode);
+                darkModeIcon.classList.toggle('icon-dark', !isDarkMode);
+                darkModeIcon.classList.toggle('icon-light', isDarkMode);
+
+                if (isDarkMode) {
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    localStorage.removeItem('theme');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

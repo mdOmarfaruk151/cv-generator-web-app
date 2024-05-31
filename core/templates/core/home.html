@@ -1,0 +1,41 @@
+<!-- core/templates/core/home.html -->
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="text-center">
+    <h1 class="text-4xl font-bold mb-5">Welcome To The CV Generator</h1>
+    <a href="/cv-generator/" class="bg-blue-500 text-white px-4 py-2 rounded">Create Your CV</a>
+</div>
+
+<div class="mt-10 max-w-screen-lg mx-auto p-8 bg-white shadow-md rounded-lg mb-8">
+    <h2 class="text-2xl font-bold mb-4">Features</h2>
+    <ul class="list-disc list-inside text-left text-lg">
+        <li>Create professional CVs easily</li>
+        <li>Download CVs in PDF format</li>
+        <li>Responsive design for all devices</li>
+        <li>Dark mode support</li>
+        <li>Secure user authentication and profile management</li>
+    </ul>
+    
+    <h2 class="text-2xl font-bold mt-8 mb-4">Technologies Used</h2>
+    <ul class="list-disc list-inside text-left text-lg">
+        <li>Django: Web framework for building the application</li>
+        <li>Tailwind CSS: Utility-first CSS framework for styling</li>
+        <li>HTML5 and CSS3: For structuring and designing web pages</li>
+        <li>JavaScript: For dynamic and interactive content</li>
+        <li>ReportLab: Python library for generating PDFs</li>
+        <li>FontAwesome: Icon library for enhancing UI</li>
+        <li>jQuery: JavaScript library for simplifying DOM manipulation</li>
+    </ul>
+    
+    <h2 class="text-2xl font-bold mt-8 mb-4">Packages and Libraries</h2>
+    <ul class="list-disc list-inside text-left text-lg">
+        <li>Django: For backend and server-side logic</li>
+        <li>ReportLab: For generating downloadable PDF files</li>
+        <li>Tailwind CSS: For responsive and modern UI design</li>
+        <li>xhtml2pdf: For converting HTML to PDF (alternative method)</li>
+        <li>FontAwesome: For using icons in the application</li>
+        <li>jQuery: For enhanced JavaScript functionalities</li>
+    </ul>
+</div>
+{% endblock %}

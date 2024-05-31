@@ -1,0 +1,49 @@
+{% extends 'core/base.html' %}
+{% block title %}CVs Created{% endblock %}
+{% block content %}
+<h1 class="text-3xl font-bold mb-4 text-center">CVs Created</h1>
+<form method="GET" action="{% url 'cvs_created' %}" class="flex items-center justify-center mb-4">
+    <input 
+        type="text" 
+        name="q" 
+        id="searchBox" 
+        placeholder="Search by name, email, or phone number" 
+        class="shadow appearance-none border rounded w-full md:w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+        value="{{ request.GET.q }}">
+    <button 
+        type="submit" 
+        class="ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+        Search
+    </button>
+</form>
+<div class="overflow-x-auto mx-4">
+    <table class="min-w-full bg-white dark:bg-gray-800 shadow-md rounded-lg overflow-hidden">
+        <thead class="bg-gray-800 text-white dark:bg-gray-900">
+            <tr>
+                <th class="w-1/12 py-2 px-4 text-left">#</th>
+                <th class="w-3/12 py-2 px-4 text-left">Full Name</th>
+                <th class="w-3/12 py-2 px-4 text-left">Email</th>
+                <th class="w-3/12 py-2 px-4 text-left">Phone Number</th>
+                <th class="w-2/12 py-2 px-4 text-left">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cv in cvs %}
+            <tr class="border-b hover:bg-gray-100 dark:hover:bg-gray-700">
+                <td class="py-2 px-4">{{ forloop.counter }}</td>
+                <td class="py-2 px-4">{{ cv.full_name }}</td>
+                <td class="py-2 px-4">{{ cv.email }}</td>
+                <td class="py-2 px-4">{{ cv.phone_number }}</td>
+                <td class="py-2 px-4 flex space-x-2">
+                    <a href="{% url 'cv_view' cv.id %}" class="bg-blue-700 hover:bg-blue-500 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline">View</a>
+                    <a href="{% url 'cv_download' cv.id %}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline ">Download</a>
+                    <a href="{% url 'cv_delete' cv.id %}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock %}

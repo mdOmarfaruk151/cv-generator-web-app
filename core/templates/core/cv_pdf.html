@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ cv.full_name }}'s CV</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+        }
+        .section-title {
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .section-content {
+            margin-bottom: 2rem;
+        }
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-900 antialiased">
+    <div class="max-w-screen-md mx-auto p-8" style="width: 210mm; height: 297mm;">
+        <!-- Header Section -->
+        <div class="flex items-center space-x-4 mb-4">
+            <img src="{{ cv.image.url }}" alt="CV Image" class="rounded-md shadow-md" width="150" height="150">
+            <div>
+                <h1 class="text-4xl font-bold">{{ cv.full_name }}</h1>
+                <p class="text-lg">{{ cv.email }}</p>
+                <p class="text-lg">{{ cv.phone_number }}</p>
+                <p class="text-lg">{{ cv.address }}</p>
+            </div>
+        </div>
+
+        <!-- Experience Section -->
+        <div class="section">
+            <h2 class="text-2xl font-bold section-title">Experience</h2>
+            <div class="section-content">
+                <p class="text-lg">{{ cv.experience }}</p>
+            </div>
+        </div>
+
+        <!-- Education Section -->
+        <div class="section">
+            <h2 class="text-2xl font-bold section-title">Education</h2>
+            <div class="section-content">
+                <p class="text-lg">{{ cv.education }}</p>
+            </div>
+        </div>
+
+        <!-- Projects Section -->
+        <div class="section">
+            <h2 class="text-2xl font-bold section-title">Projects</h2>
+            <div class="section-content">
+                <p class="text-lg">{{ cv.projects }}</p>
+            </div>
+        </div>
+
+        <!-- Skills Section -->
+        <div class="section">
+            <h2 class="text-2xl font-bold section-title">Skills</h2>
+            <div class="section-content">
+                <p class="text-lg">{{ cv.skills }}</p>
+            </div>
+        </div>
+
+        <!-- Awards Section -->
+        <div class="section">
+            <h2 class="text-2xl font-bold section-title">Awards</h2>
+            <div class="section-content">
+                <p class="text-lg">{{ cv.awards }}</p>
+            </div>
+        </div>
+
+        <!-- Languages Section -->
+        <div class="section">
+            <h2 class="text-2xl font-bold section-title">Languages</h2>
+            <div class="section-content">
+                <p class="text-lg">{{ cv.languages }}</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,98 @@
+{% extends 'core/base.html' %}
+
+{% block title %}{{ cv.full_name }}'s CV{% endblock %}
+
+{% block content %}
+
+<!-- Button Container -->
+<div class="flex justify-center mt-0 mb-4 space-x-4">
+    <!-- Button to Back -->
+    <a href="{% url 'cvs_created' %}" class="text-lg font-bold bg-blue-700 hover:bg-blue-500 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline">
+        <i class="fas fa-arrow-left"></i> Back
+    </a>
+    <!-- Button to download PDF -->
+    <button onclick="generatePDF('mn', '{{ cv.full_name }}')" type="button" class="bg-blue-700 hover:bg-blue-500 text-white py-2 px-4 rounded">
+        <i class="fas fa-download"></i> Download PDF
+    </button>
+</div>
+
+<div id="mn" class="max-w-screen-md mx-auto bg-white shadow-md rounded-lg overflow-hidden p-8 mb-8" style="width: 210mm; height: 297mm;">
+    <div class="flex items-center justify-between mb-8">
+        <div class="flex items-center space-x-4">
+            <img src="{{ cv.image.url }}" alt="CV Image" class="rounded-md shadow-md" width="150" height="150">
+            <div>
+                <h1 class="text-4xl font-bold">{{ cv.full_name }}</h1>
+                <p class="text-lg">{{ cv.email }}</p>
+                <p class="text-lg">{{ cv.phone_number }}</p>
+                <p class="text-lg">{{ cv.address }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="section mb-8">
+        <h2 class="text-2xl font-bold border-b-2 border-gray-300 pb-2 mb-4">Experience</h2>
+        <p class="text-lg">{{ cv.experience }}</p>
+    </div>
+    <div class="section mb-8">
+        <h2 class="text-2xl font-bold border-b-2 border-gray-300 pb-2 mb-4">Education</h2>
+        <p class="text-lg">{{ cv.education }}</p>
+    </div>
+    <div class="section mb-8">
+        <h2 class="text-2xl font-bold border-b-2 border-gray-300 pb-2 mb-4">Projects</h2>
+        <p class="text-lg">{{ cv.projects }}</p>
+    </div>
+    <div class="section mb-8">
+        <h2 class="text-2xl font-bold border-b-2 border-gray-300 pb-2 mb-4">Skills</h2>
+        <p class="text-lg">{{ cv.skills }}</p>
+    </div>
+    <div class="section mb-8">
+        <h2 class="text-2xl font-bold border-b-2 border-gray-300 pb-2 mb-4">Awards</h2>
+        <p class="text-lg">{{ cv.awards }}</p>
+    </div>
+    <div class="section mb-8">
+        <h2 class="text-2xl font-bold border-b-2 border-gray-300 pb-2 mb-4">Languages</h2>
+        <p class="text-lg">{{ cv.languages }}</p>
+    </div>
+</div>
+
+<!-- Include html2pdf.js library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+<script type="text/javascript">
+    function generatePDF(containerId, fullName) {
+        const container = document.getElementById(containerId);
+
+        // Ensure the background is white and text/underline are black regardless of the theme
+        container.style.backgroundColor = '#ffffff';
+        const elementsToColorBlack = container.querySelectorAll('*');
+        elementsToColorBlack.forEach(element => {
+            element.style.color = '#000000';
+            if (element.tagName === 'H2') {
+                element.style.borderBottomColor = '#000000';
+            }
+        });
+
+        // Download as PDF
+        const pdfOptions = {
+            margin: 10,
+            filename: `${fullName}-CV.pdf`,
+            image: { type: 'png', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+
+        html2pdf()
+            .from(container)
+            .set(pdfOptions)
+            .save()
+            .then(() => {
+                // Restore original styles
+                container.style.backgroundColor = '';
+                elementsToColorBlack.forEach(element => {
+                    element.style.color = '';
+                    if (element.tagName === 'H2') {
+                        element.style.borderBottomColor = '';
+                    }
+                });
+            });
+    }
+</script>
+{% endblock %}
